@@ -56,7 +56,7 @@ LANGUAGE_NAMES = {
     'uk': 'Ukrainian', 'el': 'Greek', 'iw': 'Hebrew', 'hy_AM': 'Armenian', 'bn_IN': 'Bengali (India)',
     'hi': 'Hindi', 'kn_IN': 'Kannada', 'ml_IN': 'Malayalam', 'mr_IN': 'Marathi', 'ta_IN': 'Tamil',
     'te_IN': 'Telugu', 'km_KH': 'Khmer', 'lo_LA': 'Lao', 'th': 'Thai', 'mn_MN': 'Mongolian',
-    'ms_MY': 'Malay', 'ro_translit': 'Romanian Translit'
+    'ms_MY': 'Malay', 'ro_translit': 'Romanian Translit', 'vi': 'Vietnamese'
 }
 
 # Character mappings for non-Latin languages
