@@ -2,7 +2,7 @@
 Keyboard layouts adapted for use with the BlackBerry Passport 3-row keyboard.
 
 # How to contribute
-* Commit changes to the generate_kcm.py, check CHARACTER_MAPPINGS to find your language, if your language isn't there, add it.
+* Commit changes to the generate_kcm.py, check CHARACTER_MAPPINGS to find your language, if your language isn't there, add it, update LANGUAGE_NAMES.
 * Commit changes to languages.csv
 
 For example:
