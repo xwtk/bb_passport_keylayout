@@ -255,8 +255,13 @@ CHARACTER_MAPPINGS = {
     }
 }
 
+def unicode_escape(s):
+    return ''.join(
+        c if ord(c) < 128 else f'\\u{ord(c):04x}'
+        for c in s
+    )
+
 def generate_kcm_file(locale, layout_type, kcm_filename, output_dir):
-    """Generate a KCM file for a specific locale and layout type"""
     # Get physical layout mapping
     physical_layout = PHYSICAL_LAYOUTS[layout_type]
     
@@ -293,11 +298,15 @@ def generate_kcm_file(locale, layout_type, kcm_filename, output_dir):
                 base_char = key_label.lower()
                 shift_char = key_label.upper()
             
+            # Apply Unicode escaping to non-ASCII characters
+            escaped_base = unicode_escape(base_char)
+            escaped_shift = unicode_escape(shift_char)
+            
             # Create key entry
             content += "key {} {{\n".format(key_label)
             content += "    label: '{}'\n".format(key_label)
-            content += "    base: '{}'\n".format(base_char)
-            content += "    shift, capslock: '{}'\n".format(shift_char)
+            content += "    base: '{}'\n".format(escaped_base)
+            content += "    shift, capslock: '{}'\n".format(escaped_shift)
             content += "}\n\n"
     
     # Write to file
@@ -310,7 +319,6 @@ def generate_kcm_file(locale, layout_type, kcm_filename, output_dir):
     return output_path
 
 def main(language_list_file, output_dir):
-    """Main function to process language list and generate KCM files"""
     # Read language list CSV
     with open(language_list_file, 'r', encoding='utf-8') as f:
         reader = csv.DictReader(f)
