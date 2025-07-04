@@ -5,7 +5,6 @@ from collections import defaultdict
 # Define physical layouts
 PHYSICAL_LAYOUTS = {
     'QWERTY': {
-        'kl_file': 'qpnp.kl',
         'key_mapping': {
             16: 'Q', 17: 'W', 18: 'E', 19: 'R', 20: 'T', 21: 'Y', 22: 'U', 23: 'I', 24: 'O', 25: 'P',
             30: 'A', 31: 'S', 32: 'D', 33: 'F', 34: 'G', 35: 'H', 36: 'J', 37: 'K', 38: 'L',
@@ -13,7 +12,6 @@ PHYSICAL_LAYOUTS = {
         }
     },
     'AZERTY': {
-        'kl_file': 'qpnp_azerty.kl',
         'key_mapping': {
             16: 'A', 17: 'Z', 18: 'E', 19: 'R', 20: 'T', 21: 'Y', 22: 'U', 23: 'I', 24: 'O', 25: 'P',
             30: 'Q', 31: 'S', 32: 'D', 33: 'F', 34: 'G', 35: 'H', 36: 'J', 37: 'K', 38: 'L',
@@ -21,7 +19,6 @@ PHYSICAL_LAYOUTS = {
         }
     },
     'QWERTZ': {
-        'kl_file': 'qpnp_qwertz.kl',
         'key_mapping': {
             16: 'Q', 17: 'W', 18: 'E', 19: 'R', 20: 'T', 21: 'Z', 22: 'U', 23: 'I', 24: 'O', 25: 'P',
             30: 'A', 31: 'S', 32: 'D', 33: 'F', 34: 'G', 35: 'H', 36: 'J', 37: 'K', 38: 'L',
@@ -262,7 +259,8 @@ def unicode_escape(s):
     )
 
 def generate_kcm_file(locale, layout_type, kcm_filename, output_dir):
-    # Get physical layout mapping
+    # Get physical layout mapping, we assume base hardware layout is set to QWERTY in the system by QPNP keypad, physical_layout is the layout we want to achieve virtually
+    base_layout = PHYSICAL_LAYOUTS["QWERTY"]
     physical_layout = PHYSICAL_LAYOUTS[layout_type]
     
     # Determine base locale (without region)
@@ -286,6 +284,7 @@ def generate_kcm_file(locale, layout_type, kcm_filename, output_dir):
             if key_code not in physical_layout['key_mapping']:
                 continue
                 
+            base_key_label = base_layout['key_mapping'][key_code]
             key_label = physical_layout['key_mapping'][key_code]
             
             # Get character mapping
@@ -303,8 +302,8 @@ def generate_kcm_file(locale, layout_type, kcm_filename, output_dir):
             escaped_shift = unicode_escape(shift_char)
             
             # Create key entry
-            content += "key {} {{\n".format(key_label)
-            content += "    label: '{}'\n".format(key_label)
+            content += "key {} {{\n".format(base_key_label)
+            content += "    label: '{}'\n".format(base_key_label)
             content += "    base: '{}'\n".format(escaped_base)
             content += "    shift, capslock: '{}'\n".format(escaped_shift)
             content += "}\n\n"
