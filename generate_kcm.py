@@ -66,7 +66,7 @@ CHARACTER_MAPPINGS = {
         'Z': ('я', 'Я'), 'X': ('ч', 'Ч'), 'C': ('с', 'С'), 'V': ('м', 'М'), 'B': ('и', 'И'),
         'N': ('т', 'Т'), 'M': ('ь', 'Ь')
     },
-    'ru_translit': {  # Russian (Translit)
+    'ru_translit': {  # Russian Translit
         'Q': ('я', 'Я'), 'W': ('ш', 'Ш'), 'E': ('е', 'Е'), 'R': ('р', 'Р'), 'T': ('т', 'Т'),
         'Y': ('ы', 'Ы'), 'U': ('у', 'У'), 'I': ('и', 'И'), 'O': ('о', 'О'), 'P': ('п', 'П'),
         'A': ('а', 'А'), 'S': ('с', 'С'), 'D': ('д', 'Д'), 'F': ('ф', 'Ф'), 'G': ('г', 'Г'),
@@ -259,12 +259,9 @@ def unicode_escape(s):
     )
 
 def generate_kcm_file(locale, layout_type, kcm_filename, output_dir):
-    # Get physical layout mapping, we assume base hardware layout is set to QWERTY in the system by QPNP keypad, physical_layout is the layout we want to achieve virtually
+    # Get physical layout mapping, we assume base hardware layout is set to QWERTY in the system by QPNP keypad
     base_layout = PHYSICAL_LAYOUTS["QWERTY"]
     physical_layout = PHYSICAL_LAYOUTS[layout_type]
-    
-    # Determine base locale (without region)
-    base_locale = locale.split('_')[0]
     
     # Get language name for header
     language_name = LANGUAGE_NAMES.get(locale, locale)
@@ -287,11 +284,11 @@ def generate_kcm_file(locale, layout_type, kcm_filename, output_dir):
             base_key_label = base_layout['key_mapping'][key_code]
             key_label = physical_layout['key_mapping'][key_code]
             
-            # Get character mapping
-            if base_locale in CHARACTER_MAPPINGS and key_label in CHARACTER_MAPPINGS[base_locale]:
-                base_char, shift_char = CHARACTER_MAPPINGS[base_locale][key_label]
-            elif '_' in locale and locale in CHARACTER_MAPPINGS and key_label in CHARACTER_MAPPINGS[locale]:
+            # Get character mapping, prioritize full locale
+            if locale in CHARACTER_MAPPINGS and key_label in CHARACTER_MAPPINGS[locale]:
                 base_char, shift_char = CHARACTER_MAPPINGS[locale][key_label]
+            elif locale.split('_')[0] in CHARACTER_MAPPINGS and key_label in CHARACTER_MAPPINGS[locale.split('_')[0]]:
+                base_char, shift_char = CHARACTER_MAPPINGS[locale.split('_')[0]][key_label]
             else:
                 # Default to Latin mapping
                 base_char = key_label.lower()
