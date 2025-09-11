@@ -40,7 +40,7 @@ LANGUAGE_NAMES = {
     'en_CA': 'English (Canada)', 'en_IE': 'English (Ireland)', 'en_IN': 'English (India)',
     'en_NZ': 'English (New Zealand)', 'en_SG': 'English (Singapore)', 'en_ZA': 'English (South Africa)',
     'af': 'Afrikaans', 'az_AZ': 'Azerbaijani', 'bs': 'Bosnian', 'ca': 'Catalan',
-    'cy': 'Welsh', 'da': 'Danish', 'es': 'Spanish', 'es_US': 'Spanish (US)',
+    'cy': 'Welsh', 'da': 'Danish', 'es': 'Spanish', 'es_US': 'Spanish (US)', 'es_MX': 'Spanish (MX)',
     'es_419': 'Spanish (Latin America)', 'et_EE': 'Estonian', 'eu_ES': 'Basque', 'fi': 'Finnish',
     'fil': 'Filipino', 'ga': 'Irish', 'gl_ES': 'Galician', 'in': 'Indonesian', 'is': 'Icelandic',
     'it': 'Italian', 'nb': 'Norwegian Bokmål', 'nl': 'Dutch', 'pl': 'Polish', 'pt_BR': 'Portuguese (Brazil)',
@@ -59,12 +59,12 @@ LANGUAGE_NAMES = {
 # Character mappings for non-Latin languages
 CHARACTER_MAPPINGS = {
     'ru': {  # Russian
-        'Q': ('й', 'Й'), 'W': ('ц', 'Ц'), 'E': ('у', 'У'), 'R': ('к', 'К'), 'T': ('е', 'Е'),
-        'Y': ('н', 'Н'), 'U': ('г', 'Г'), 'I': ('ш', 'Ш'), 'O': ('щ', 'Щ'), 'P': ('з', 'З'),
-        'A': ('ф', 'Ф'), 'S': ('ы', 'Ы'), 'D': ('в', 'В'), 'F': ('а', 'А'), 'G': ('п', 'П'),
-        'H': ('р', 'Р'), 'J': ('о', 'О'), 'K': ('л', 'Л'), 'L': ('д', 'Д'),
-        'Z': ('я', 'Я'), 'X': ('ч', 'Ч'), 'C': ('с', 'С'), 'V': ('м', 'М'), 'B': ('и', 'И'),
-        'N': ('т', 'Т'), 'M': ('ь', 'Ь')
+        'Q': ('й', 'Й'), 'W': ('у', 'У'), 'E': ('к', 'К'), 'R': ('е', 'Е'), 'T': ('н', 'Н'),
+        'Y': ('г', 'Г'), 'U': ('ш', 'Ш'), 'I': ('з', 'З'), 'O': ('х', 'Х'), 'P': ('ю', 'Ю'),
+        'A': ('ф', 'Ф'), 'S': ('в', 'В'), 'D': ('а', 'А'), 'F': ('п', 'П'), 'G': ('р', 'Р'),
+        'H': ('о', 'О'), 'J': ('л', 'Л'), 'K': ('д', 'Д'), 'L': ('ж', 'Ж'),
+        'Z': ('я', 'Я'), 'X': ('с', 'С'), 'C': ('м', 'М'), 'V': ('и', 'И'), 'B': ('т', 'Т'),
+        'N': ('ь', 'Ь'), 'M': ('б', 'Б')
     },
     'ru_translit': {  # Russian Translit
         'Q': ('я', 'Я'), 'W': ('ш', 'Ш'), 'E': ('е', 'Е'), 'R': ('р', 'Р'), 'T': ('т', 'Т'),
