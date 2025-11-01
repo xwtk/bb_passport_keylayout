@@ -317,8 +317,8 @@ def generate_kcm_file(locale, layout_type, kcm_filename, output_dir):
             content += "    label: '{}'\n".format(base_key_label)
             content += "    base: '{}'\n".format(escaped_base)
             content += "    shift, capslock: '{}'\n".format(escaped_shift)
-            content += "    lalt, alt: '{}'\n".format(alt)
-            content += "    sym: '{}'\n".format(sym)
+            content += "    lalt, alt: '{}'\n".format(escaped_alt)
+            content += "    sym: '{}'\n".format(escaped_sym)
             content += "}\n\n"
     
     # Write to file
