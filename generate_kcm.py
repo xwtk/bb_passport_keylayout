@@ -36,7 +36,7 @@ ROW_GROUPINGS = {
 
 # Language names for header
 LANGUAGE_NAMES = {
-    'en_US': 'English (US)', 'en_GB': 'English (UK)', 'en_AU': 'English (Australia)',
+    'zz': 'Alphabet', 'en_US': 'English (US)', 'en_GB': 'English (UK)', 'en_AU': 'English (Australia)',
     'en_CA': 'English (Canada)', 'en_IE': 'English (Ireland)', 'en_IN': 'English (India)',
     'en_NZ': 'English (New Zealand)', 'en_SG': 'English (Singapore)', 'en_ZA': 'English (South Africa)',
     'af': 'Afrikaans', 'az_AZ': 'Azerbaijani', 'bs': 'Bosnian', 'ca': 'Catalan',
@@ -58,6 +58,14 @@ LANGUAGE_NAMES = {
 
 # Character mappings for non-Latin languages
 CHARACTER_MAPPINGS = {
+    'alt-sym': {
+        'Q': ('0', '~'), 'W': ('1', '`'), 'E': ('2', '['), 'R': ('3', ']'), 'T': ('(', '{'),
+        'Y': (')', '}'), 'U': ('_', '<'), 'I': ('1', '>'), 'O': ('"', '^'), 'P': ('&', '%'),
+        'A': ('#', '_'), 'S': ('4', '+'), 'D': ('5', '-'), 'F': ('6', '='), 'G': ('/', '\\'),
+        'H': (':', '|'), 'J': (';', '&'), 'K': ('@', '«'), 'L': (',', '»'),
+        'Z': ('*', '¥'), 'X': ('7', '€'), 'C': ('8', '£'), 'V': ('9', '$'), 'B': ('!', '!'),
+        'N': ('?', '?'), 'M': ('.', '.')
+    },
     'ru': {  # Russian
         'Q': ('й', 'Й'), 'W': ('у', 'У'), 'E': ('к', 'К'), 'R': ('е', 'Е'), 'T': ('н', 'Н'),
         'Y': ('г', 'Г'), 'U': ('ш', 'Ш'), 'I': ('з', 'З'), 'O': ('х', 'Х'), 'P': ('ю', 'Ю'),
@@ -269,7 +277,7 @@ def generate_kcm_file(locale, layout_type, kcm_filename, output_dir):
     # Create KCM content with proper header
     content = "#\n"
     content += "# {} for reduced physical keyboard\n".format(language_name)
-    content += "# Gor Mirzoyan (xwtk.cloud) and the community.\n"
+    content += "# Gor Mirzoyan (xwtk.cloud).\n"
     content += "#\n\n"
     content += "type OVERLAY\n\n"
     
@@ -287,22 +295,30 @@ def generate_kcm_file(locale, layout_type, kcm_filename, output_dir):
             # Get character mapping, prioritize full locale
             if locale in CHARACTER_MAPPINGS and key_label in CHARACTER_MAPPINGS[locale]:
                 base_char, shift_char = CHARACTER_MAPPINGS[locale][key_label]
+                alt, sym = CHARACTER_MAPPINGS["alt-sym"][key_label]
             elif locale.split('_')[0] in CHARACTER_MAPPINGS and key_label in CHARACTER_MAPPINGS[locale.split('_')[0]]:
                 base_char, shift_char = CHARACTER_MAPPINGS[locale.split('_')[0]][key_label]
+                alt, sym = CHARACTER_MAPPINGS["alt-sym"][key_label]
             else:
                 # Default to Latin mapping
                 base_char = key_label.lower()
                 shift_char = key_label.upper()
+                alt, sym = CHARACTER_MAPPINGS["alt-sym"][key_label]
             
             # Apply Unicode escaping to non-ASCII characters
             escaped_base = unicode_escape(base_char)
             escaped_shift = unicode_escape(shift_char)
+            
+            escaped_alt = unicode_escape(alt)
+            escaped_sym = unicode_escape(sym)
             
             # Create key entry
             content += "key {} {{\n".format(base_key_label)
             content += "    label: '{}'\n".format(base_key_label)
             content += "    base: '{}'\n".format(escaped_base)
             content += "    shift, capslock: '{}'\n".format(escaped_shift)
+            content += "    lalt, alt: '{}'\n".format(alt)
+            content += "    sym: '{}'\n".format(sym)
             content += "}\n\n"
     
     # Write to file
